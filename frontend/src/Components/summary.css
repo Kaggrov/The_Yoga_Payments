@@ -1,0 +1,52 @@
+.summary__container {
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: white;
+    border-radius: 10px;
+    width: 50%;
+    height:50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    padding: 15px;
+    
+}
+.tick__container {
+    margin-left: auto;
+    margin-right: auto;
+}
+.details__container {
+
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap:0.5rem;
+}
+
+.name ,.age,.date,.batch,.mode__payment, .amount{
+    color: gray;
+    font-size: 1.30rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.home__button {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    border : 2px solid #034694;
+    padding-right: 30%;
+    padding-left: 30%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    background-color: beige;
+    color: #034694;
+    font-size: 1rem;
+    font-weight: 600;
+}

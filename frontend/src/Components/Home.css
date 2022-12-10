@@ -1,0 +1,48 @@
+.form__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding : 20px;
+    margin: 10px;
+    border : 3px solid rgb(82, 132, 189);
+    border-radius: 15px;
+    max-width: 65%;
+    width: 50%;
+    background-color: #5F6F94;
+}
+
+.input__name, .input__age, .input__date , .input__batch, .input__phone{
+    background-color: rgb(226, 222, 222);
+    height: 35px;
+    border: 3px solid rgb(226, 222, 222);
+    padding: 1px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    margin-right: 10px;
+    margin-left: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form__button {  
+
+    margin-top: 8%;
+    margin-left: 26%;
+    width: 300px;
+    height: 40px;
+    border: #d67636;
+    background: #d37537;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer; 
+    font-size: 20px;
+    padding: 10px;
+  
+  
+  }
