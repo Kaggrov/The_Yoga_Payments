@@ -4,6 +4,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 dotenv.config()
+mongoose.set('strictQuery', true);
 import user  from './userModel.js';
 
 
