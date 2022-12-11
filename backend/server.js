@@ -20,7 +20,7 @@ app.use(cors())
 
 
 //db configuration
-const mongoURI = 'mongodb+srv://admin:zu4z0H8yrlDF38d0@cluster0.jfewugg.mongodb.net/yoga?retryWrites=true&w=majority'
+const mongoURI = process.env.MONGODB_URI
 
 
 // MongoDB Connection
