@@ -18,7 +18,8 @@ const MockPayment = ({current_user , setUserDetails}) => {
 
     console.log(current_user.phoneNo)
 
-    const CompletePayment = async () => {
+    const CompletePayment = async () => { // I have assumed this function as told , but for showing payment operation i am posting 
+                                            // and fetching current user details and providing it as response at last summary page
 
         setLoading(true);
         await axios.post('/details',{

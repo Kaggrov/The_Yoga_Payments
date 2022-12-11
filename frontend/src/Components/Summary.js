@@ -11,7 +11,7 @@ const Summary = ({userDetails}) => {
         navigate('/')
     }
     console.log(userDetails)
-    const Batch = ['6AM - 7AM', '7AM - 8AM','8AM - 9AM','5AM - 6AM']
+    const Batch = ['6AM - 7AM', '7AM - 8AM','8AM - 9AM','5AM - 6AM'] // Landing page after successful payment operation 
   return (
     <div className='summary__container'>
         <div className='tick__container'><img src={check} alt='success' width="100px" height='100px'></img></div>

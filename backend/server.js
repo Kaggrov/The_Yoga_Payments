@@ -47,6 +47,7 @@ app.get('/',(req,res)=> res.status(200).send("Hello"));
 //     res.status(200).json("aa");
 // })
 
+// post route for storing details of user 
 app.post('/user',(req,res)=>{
 
     console.log(req.body)
@@ -58,12 +59,12 @@ app.post('/user',(req,res)=>{
 
     var regExp = /^[a-z A-Z]*$/ ;
 
-    var varDate = new Date(startDate); //dd-mm-YYYY
+    var varDate = new Date(startDate);
     var current = new Date();
     current.setHours(0,0,0,0);
 
     
-
+    // All validation Checks for input
     if(age<18 || age>65)
     {
         res.status(401).send("Enter valid age to continue ...")
@@ -84,9 +85,10 @@ app.post('/user',(req,res)=>{
     {
         res.status(401).send("Enter valid Batch no. to continiue ...")
     }
-    else{
-
-        user.findOne({phoneNo:phoneNo}).then((found)=>{
+    else{ // Cleared validation checks
+                                                            // Check if user is already customer , if yes then check if last payment
+                                                            // is done one month earlier
+        user.findOne({phoneNo:phoneNo}).then((found)=>{ 
             if(found)
             {       
                     console.log(found);
@@ -110,7 +112,7 @@ app.post('/user',(req,res)=>{
 
             }
             else
-            {
+            {   // Create instance of model schema
                 const PersonalDetails = new user({
                     "name":name,
                     "age" : age,
@@ -138,6 +140,8 @@ app.post('/user',(req,res)=>{
 
 })
 
+
+// post route to fetch all details of current user and pass as display to frontend
 app.post('/details', async(req,res)=>{
     const search_key = req.body.phoneNo;
 
