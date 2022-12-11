@@ -1,3 +1,5 @@
+## Note :- Adding user to database takes sometimes upto 15 seconds .
+
 # Features Implemented :-
 ## User can fill the application form and their details are stored in MongoDB database .
 ## User can select Payment method and click payment button
