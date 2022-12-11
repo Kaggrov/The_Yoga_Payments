@@ -97,7 +97,7 @@ app.post('/user',(req,res)=>{
 
                     console.log(No_of_Days);
 
-                    (No_of_Days > 30) ? user.updateOne({phoneNo:phoneNo},{$set:{startDate:to_update}}).then(()=>{
+                    (No_of_Days > 30) ? (user.updateOne({phoneNo:phoneNo},{$set:{startDate:to_update}}).then(()=>{
                         res.status(200).send({
                             result:"New Batch Date is Updated ...",
                             phoneNo:phoneNo
@@ -105,7 +105,7 @@ app.post('/user',(req,res)=>{
                     })
                     .catch((error)=>{
                         res.status(400).send(error);
-                    }) : res.status(301).send("You can't enroll a Batch before 30 Days of Previous batch selected ...")
+                    })) : (res.status(201).send("You can't enroll a Batch before 30 Days of Previous batch selected ..."));
 
             }
             else

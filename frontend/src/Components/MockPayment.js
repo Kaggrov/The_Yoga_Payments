@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './MockPayment.css'
 import bhim from '../utils/bhim.png'
 import phonepe from '../utils/phonepe.png'
@@ -7,10 +7,12 @@ import gpay from '../utils/gpay.png'
 import { useNavigate } from 'react-router-dom';
 import axios from '../axios'
 import { NotificationManager } from 'react-notifications'
+import { ThreeCircles } from  'react-loader-spinner'
 
 const MockPayment = ({current_user , setUserDetails}) => {
 
     const navigate = useNavigate();
+    const [loading,setLoading] = useState(false);
     const upi = ['Bhim UPI','PhonePe','PayTM','GPay']
     let mode;
 
@@ -18,13 +20,11 @@ const MockPayment = ({current_user , setUserDetails}) => {
 
     const CompletePayment = async () => {
 
+        setLoading(true);
         await axios.post('/details',{
             phoneNo:current_user.phoneNo
         }).then(async (res)=>{
             NotificationManager.success('', 'Payment Has been Done Successfully !!!',3000);
-            setTimeout(() => {
-            
-            }, 3000);
             await setUserDetails({
                 name:res.data.name,
                 age:res.data.age,
@@ -33,7 +33,10 @@ const MockPayment = ({current_user , setUserDetails}) => {
                 batch:res.data.batch,
                 mode:mode
             })
-            navigate('/summary')
+            setTimeout(() => {
+                navigate('/summary')
+            }, 3000);
+            
         })
         .catch((error)=>{
             NotificationManager.success('', 'Payment has been failed !!!',3000);
@@ -57,7 +60,19 @@ const MockPayment = ({current_user , setUserDetails}) => {
 
 
   return (
-    <div className='payment__container'>
+    (loading)?(<div style={{"marginLeft":"auto","marginRight":"auto","marginTop":"20%"}}><ThreeCircles
+        height="100"
+        width="100"
+        color="#021030"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel="three-circles-rotating"
+        outerCircleColor=""
+        innerCircleColor=""
+        middleCircleColor=""
+      /></div>) :
+    (<div className='payment__container'>
         <div className='header_'>
             <div className='element1'>UPI/BHIM</div>
             <div className='element2'>Change</div>
@@ -72,7 +87,7 @@ const MockPayment = ({current_user , setUserDetails}) => {
             <div className='upi__app'><img src={gpay} alt="gpay" width="250rem" height='60rem' onClick={(e,key=4)=> handlePaymentMethod(e,key)}></img></div>
         </div>
         <button className='pay__button' onClick={CompletePayment}>Pay Now</button>
-    </div>
+    </div>)
   )
 }
 

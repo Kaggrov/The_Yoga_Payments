@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Home.css'
 import { useNavigate } from 'react-router-dom';
 import axios from'../axios';
 import { NotificationManager } from 'react-notifications';
-import { Audio } from  'react-loader-spinner'
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { ThreeCircles } from  'react-loader-spinner'
+// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 
 const Home = ({setCurrent_user}) => {
+
+  // useEffect(()=>{
+  //   window.location.reload();
+  // },[])
 
   const navigate = useNavigate();
   const [name,setName] = useState("");
@@ -16,6 +20,8 @@ const Home = ({setCurrent_user}) => {
   const [startDate,setStartDate] = useState();
   const [batch,setBatch] = useState("1");
   const [phoneNo,setPhoneNo]  = useState("");
+
+  const [loading,setLoading] = useState(false);
 
   const handleAge = (event) => {
     setAge(event.target.value);
@@ -29,6 +35,7 @@ const Home = ({setCurrent_user}) => {
   const handleSubmit = async (e) => {
       e.preventDefault()
       // console.log(phoneNo)
+      setLoading(true);
 
       var date = new Date(startDate);
       let finalDate;
@@ -43,12 +50,26 @@ const Home = ({setCurrent_user}) => {
         batch:batch,
       })
       .then(async (res)=>{
-        NotificationManager.success('', 'Date has been stored successfully !!',3000);
-        setTimeout(() => {
-          
-        }, 3000);
+        if(res.status === 200){
+          NotificationManager.success('', 'Date has been stored successfully !!',3000);
           await setCurrent_user({phoneNo : res.data.phoneNo})
-          navigate('/payment')
+          setTimeout(() => {
+            navigate('/payment')
+          }, 3000);
+        }
+        else if(res.status === 201){
+          NotificationManager.warning('', 'Can not Change Batch before 1 month .. ',3000);
+          setName("");
+          setAge("");
+          setStartDate("");
+          setBatch("1")
+          setPhoneNo("");
+          setTimeout(() => {
+          setLoading(false)
+          }, 3000);
+        } 
+        
+       
           
       })
       .catch((error)=>{
@@ -66,10 +87,10 @@ const Home = ({setCurrent_user}) => {
 
   return (
     <div className='form__container'>
-      <ThreeCircles
+      {(loading) ? (<div style={{"marginLeft":"auto","marginRight":"auto","marginTop":"15%"}}><ThreeCircles
         height="100"
         width="100"
-        color="#4fa94d"
+        color="#021030"
         wrapperStyle={{}}
         wrapperClass=""
         visible={true}
@@ -77,8 +98,8 @@ const Home = ({setCurrent_user}) => {
         outerCircleColor=""
         innerCircleColor=""
         middleCircleColor=""
-      />
-      <form className='form'>
+      /></div>) : 
+      (<form className='form'>
         <div style={{margin:"10px" ,marginLeft:"0", fontWeight:"500",fontSize:"1.5rem",backgroundColor:"#5F6F94"}}>Enter your Name :</div>
         <input 
           type="text"
@@ -122,8 +143,8 @@ const Home = ({setCurrent_user}) => {
           </select>
 
           <button className='form__button' onClick={handleSubmit}>Proceed to Payment</button>
-      </form>
-
+      </form>)
+}
     </div>
   )
 }
