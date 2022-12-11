@@ -5,6 +5,8 @@ import Home from './Components/Home'
 import MockPayment from './Components/MockPayment'
 import Summary from './Components/Summary'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import {NotificationContainer} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 
 const App = () => {
@@ -20,6 +22,7 @@ const App = () => {
               <Route exact path='/payment' element={< MockPayment current_user={current_user}  setUserDetails= {setUserDetails}/>}></Route>
               <Route exact path='/summary' element={<Summary userDetails={userDetails}/>}></Route>
         </Routes>
+        <NotificationContainer/>
       </div>
     </Router>
   )

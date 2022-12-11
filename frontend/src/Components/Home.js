@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import './Home.css'
 import { useNavigate } from 'react-router-dom';
 import axios from'../axios';
+import { NotificationManager } from 'react-notifications';
+import { Audio } from  'react-loader-spinner'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+
 
 const Home = ({setCurrent_user}) => {
 
@@ -39,11 +43,19 @@ const Home = ({setCurrent_user}) => {
         batch:batch,
       })
       .then(async (res)=>{
+        NotificationManager.success('', 'Date has been stored successfully !!',3000);
+        setTimeout(() => {
+          
+        }, 3000);
           await setCurrent_user({phoneNo : res.data.phoneNo})
           navigate('/payment')
           
       })
       .catch((error)=>{
+        NotificationManager.error('', 'Error in storing Data !!',3000);
+        setTimeout(() => {
+          
+        }, 3000);
           console.log(error)
       })
       // console.log(finalDate)
@@ -54,6 +66,18 @@ const Home = ({setCurrent_user}) => {
 
   return (
     <div className='form__container'>
+      <ThreeCircles
+        height="100"
+        width="100"
+        color="#4fa94d"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel="three-circles-rotating"
+        outerCircleColor=""
+        innerCircleColor=""
+        middleCircleColor=""
+      />
       <form className='form'>
         <div style={{margin:"10px" ,marginLeft:"0", fontWeight:"500",fontSize:"1.5rem",backgroundColor:"#5F6F94"}}>Enter your Name :</div>
         <input 

@@ -6,6 +6,7 @@ import paytm from '../utils/paytm.png'
 import gpay from '../utils/gpay.png'
 import { useNavigate } from 'react-router-dom';
 import axios from '../axios'
+import { NotificationManager } from 'react-notifications'
 
 const MockPayment = ({current_user , setUserDetails}) => {
 
@@ -20,6 +21,10 @@ const MockPayment = ({current_user , setUserDetails}) => {
         await axios.post('/details',{
             phoneNo:current_user.phoneNo
         }).then(async (res)=>{
+            NotificationManager.success('', 'Payment Has been Done Successfully !!!',3000);
+            setTimeout(() => {
+            
+            }, 3000);
             await setUserDetails({
                 name:res.data.name,
                 age:res.data.age,
@@ -31,6 +36,10 @@ const MockPayment = ({current_user , setUserDetails}) => {
             navigate('/summary')
         })
         .catch((error)=>{
+            NotificationManager.success('', 'Payment has been failed !!!',3000);
+            setTimeout(() => {
+            
+            }, 3000);
             console.log(error);
         })
             
