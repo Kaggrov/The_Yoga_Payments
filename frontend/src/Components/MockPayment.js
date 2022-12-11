@@ -5,18 +5,41 @@ import phonepe from '../utils/phonepe.png'
 import paytm from '../utils/paytm.png'
 import gpay from '../utils/gpay.png'
 import { useNavigate } from 'react-router-dom';
+import axios from '../axios'
 
-const MockPayment = () => {
+const MockPayment = ({current_user , setUserDetails}) => {
 
     const navigate = useNavigate();
+    const upi = ['Bhim UPI','PhonePe','PayTM','GPay']
+    let mode;
 
-    const CompletePayment = () => {
+    console.log(current_user.phoneNo)
+
+    const CompletePayment = async () => {
+
+        await axios.post('/details',{
+            phoneNo:current_user.phoneNo
+        }).then(async (res)=>{
+            await setUserDetails({
+                name:res.data.name,
+                age:res.data.age,
+                phoneNo:res.data.phoneNo,
+                startDate:res.data.startDate,
+                batch:res.data.batch,
+                mode:mode
+            })
             navigate('/summary')
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+            
     }
 
     const handlePaymentMethod = (e,key) => {
         e.preventDefault();
         console.log(key)
+        mode =  upi[key-1];
         console.log(document.getElementsByClassName("upi__app"))
         document.getElementsByClassName("upi__app")[key-1].classList.add("upi__app__active");
         document.getElementsByClassName("upi__app")[key-1].classList.remove("upi__app")

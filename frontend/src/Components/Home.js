@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import './Home.css'
 import { useNavigate } from 'react-router-dom';
+import axios from'../axios';
 
-const Home = () => {
+const Home = ({setCurrent_user}) => {
 
   const navigate = useNavigate();
   const [name,setName] = useState("");
   const [age,setAge] = useState("");
   const [invalidAge,setInvalidAge] = useState("");
-  const [startDate,setStartDate] = useState(new Date());
-  const [batch,setBatch] = useState();
-  const [phoneNo,setPhoneNo]  = useState();
+  const [startDate,setStartDate] = useState();
+  const [batch,setBatch] = useState("1");
+  const [phoneNo,setPhoneNo]  = useState("");
 
   const handleAge = (event) => {
     setAge(event.target.value);
@@ -21,8 +22,33 @@ const Home = () => {
       setInvalidAge("")
   }
 
-  const handleSubmit = () => {
-      navigate('/payment')
+  const handleSubmit = async (e) => {
+      e.preventDefault()
+      // console.log(phoneNo)
+
+      var date = new Date(startDate);
+      let finalDate;
+      if (!isNaN(date.getTime())) {
+          finalDate = (date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear());
+      }
+      await axios.post('/user',{
+        name:name,
+        age:age,
+        phoneNo:phoneNo,
+        startDate:finalDate.toString(),
+        batch:batch,
+      })
+      .then(async (res)=>{
+          await setCurrent_user({phoneNo : res.data.phoneNo})
+          navigate('/payment')
+          
+      })
+      .catch((error)=>{
+          console.log(error)
+      })
+      // console.log(finalDate)
+
+      
   }
 
 
@@ -47,7 +73,7 @@ const Home = () => {
           />
         <div style={{margin:"10px" ,marginLeft:"0", fontWeight:"500",fontSize:"1.5rem",backgroundColor:"#5F6F94"}}>Enter your Phone Number :</div>
         <input 
-          type="text"
+          type="string"
           placeholder='Enter the Phone Number...'
           value={phoneNo}
           onChange={(e)=>{setPhoneNo(e.target.value)}}
@@ -65,10 +91,10 @@ const Home = () => {
             className='input__batch'
             onChange={(e)=>setBatch(e.target.value)}
           >
-            <option value="6-7" style={{backgroundColor:"rgb(226, 222, 222)"}}>6 AM - 7 AM</option>
-            <option value="7-8" style={{backgroundColor:"rgb(226, 222, 222)"}}>7 AM - 8 AM</option>
-            <option value="8-9" style={{backgroundColor:"rgb(226, 222, 222)"}}>8 AM - 9 AM</option>
-            <option value="5-6" style={{backgroundColor:"rgb(226, 222, 222)"}}>5 PM - 6 PM</option>
+            <option value="1" style={{backgroundColor:"rgb(226, 222, 222)"}}>6 AM - 7 AM</option>
+            <option value="2" style={{backgroundColor:"rgb(226, 222, 222)"}}>7 AM - 8 AM</option>
+            <option value="3" style={{backgroundColor:"rgb(226, 222, 222)"}}>8 AM - 9 AM</option>
+            <option value="4" style={{backgroundColor:"rgb(226, 222, 222)"}}>5 PM - 6 PM</option>
           </select>
 
           <button className='form__button' onClick={handleSubmit}>Proceed to Payment</button>

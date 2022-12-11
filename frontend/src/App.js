@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import Header from './Components/Header'
 import Home from './Components/Home'
@@ -8,13 +8,17 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 
 const App = () => {
+
+  const [current_user,setCurrent_user] = useState({});
+  const [userDetails,setUserDetails] = useState({});
+
   return (
     <Router>
       <div className='main__container'>
         <Routes>
-              <Route exact path='/' element={<><Header /><Home /></>}></Route>
-              <Route exact path='/payment' element={< MockPayment />}></Route>
-              <Route exact path='/summary' element={<Summary/>}></Route>
+              <Route exact path='/' element={<><Header /><Home  setCurrent_user = {setCurrent_user}/></>}></Route>
+              <Route exact path='/payment' element={< MockPayment current_user={current_user}  setUserDetails= {setUserDetails}/>}></Route>
+              <Route exact path='/summary' element={<Summary userDetails={userDetails}/>}></Route>
         </Routes>
       </div>
     </Router>
