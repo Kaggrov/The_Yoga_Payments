@@ -30,3 +30,24 @@ https://user-images.githubusercontent.com/85993894/206920503-b576abac-6bdb-448a-
 https://user-images.githubusercontent.com/85993894/206920508-d9c2eda2-4a97-40a7-8a92-2fe6e0ae43b5.mp4
 
 
+## ER Diagram => We can add extra entity as Yoga_Class with attribute Fees and relation Enrolled_in But as fees is fixed therfore I used one entity only .
+
+![WhatsApp Image 2022-12-12 at 00 04 33](https://user-images.githubusercontent.com/85993894/206922390-37d29ae7-9181-4880-a653-7c05f3702128.jpeg)
+
+# MongoDB Queries used :-
+## For storing :-
+### const PersonalDetails = new user({  // user is schema model
+                    "name":name,
+                    "age" : age,
+                    "phoneNo" : phoneNo,
+                    "startDate" : startDate,
+                    "batch" : batch
+                })
+        
+                PersonalDetails.save()
+
+## For Updation :- 
+## user.updateOne({phoneNo:phoneNo},{$set:{startDate:to_update}})
+
+## For Finding User :-
+###  user.findOne({phoneNo:phoneNo})
